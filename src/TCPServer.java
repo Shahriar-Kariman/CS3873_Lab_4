@@ -39,9 +39,34 @@ class TCPServer {
 			System.out.println("From client at " + connectionSocket.getInetAddress() 
 				+ ": " + clientSentence);
 
+			System.out.println("Answer:" + calcualte(clientSentence));
+
 			capitalizedSentence = clientSentence.toUpperCase() + '\n';
 			outToClient.writeBytes(capitalizedSentence);	
 			
 		}
+	}
+
+	private static double calcualte(String equation){
+		double answer = 0;
+		String[] parts = equation.split("\\s+");
+		double first_number = Double.parseDouble(parts[0]);
+		String operation = parts[1];
+		double second_number = Double.parseDouble(parts[2]);
+		switch (operation) {
+			case "+":
+				answer = first_number + second_number;
+				break;
+			case "-":
+				answer = first_number - second_number;
+				break;
+			case "/":
+				answer = first_number / second_number;
+				break;
+			case "*":
+				answer = first_number * second_number;
+				break;
+		}
+		return answer;
 	}
 }
