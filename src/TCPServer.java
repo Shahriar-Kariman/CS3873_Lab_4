@@ -8,7 +8,6 @@ import java.net.*;
 class TCPServer {
 	public static void main(String args[]) throws Exception {
 		String clientSentence;
-		String capitalizedSentence;
 		ServerSocket welcomeSocket = new ServerSocket(6789);
 		System.out.println ("Waiting for connection.....");
 
@@ -33,17 +32,23 @@ class TCPServer {
 			DataOutputStream outToClient = new DataOutputStream(
 					connectionSocket.getOutputStream());
 			
-
-			clientSentence = inFromClient.readLine();
-
-			System.out.println("From client at " + connectionSocket.getInetAddress() 
-				+ ": " + clientSentence);
-
-			System.out.println("Answer:" + calcualte(clientSentence));
-
-			capitalizedSentence = clientSentence.toUpperCase() + '\n';
-			outToClient.writeBytes(capitalizedSentence);	
-			
+			while (true) {
+				clientSentence = inFromClient.readLine();
+				
+				if(clientSentence.equals("DONE")){
+					outToClient.writeBytes("CLOSE\n");
+					outToClient.flush();
+					connectionSocket.close();
+					break;
+				}
+	
+				System.out.println("From client at " + connectionSocket.getInetAddress() 
+					+ ": " + clientSentence);
+				double result = calcualte(clientSentence);
+				System.out.println("Answer:" + result);
+	
+				outToClient.writeBytes(result + "\n");
+			}
 		}
 	}
 
