@@ -10,7 +10,7 @@ class TCPServer {
 		String clientSentence;
 		ServerSocket welcomeSocket = new ServerSocket(6789);
 		System.out.println ("Waiting for connection.....");
-
+		
 		while (true) {
 			Socket connectionSocket = welcomeSocket.accept();
 
@@ -32,22 +32,25 @@ class TCPServer {
 			DataOutputStream outToClient = new DataOutputStream(
 					connectionSocket.getOutputStream());
 			
+			int num = 0;
 			while (true) {
 				clientSentence = inFromClient.readLine();
 				
 				if(clientSentence.equals("DONE")){
 					outToClient.writeBytes("CLOSE\n");
 					outToClient.flush();
+					System.out.println("Q&A END*******************************");
 					connectionSocket.close();
 					break;
 				}
-	
-				System.out.println("From client at " + connectionSocket.getInetAddress() 
-					+ ": " + clientSentence);
+
+				System.out.println("#" + num + "----------------------------");
+				System.out.println("Question from client: " + clientSentence);
 				double result = calcualte(clientSentence);
-				System.out.println("Answer:" + result);
+				System.out.println("Answer from server:" + result);
 	
 				outToClient.writeBytes(result + "\n");
+				num++;
 			}
 		}
 	}
