@@ -17,7 +17,7 @@ class TCPClient {
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(
 			clientSocket.getInputStream())
 		);
-		int num = 0;
+		int num = 1;
 		double sum_turnAround = 0;
 		int total_recieved = 0;
 		while (q_p.hasMoreQuestions()) {

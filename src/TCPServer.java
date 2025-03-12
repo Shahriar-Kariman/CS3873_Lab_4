@@ -32,7 +32,7 @@ class TCPServer {
 			DataOutputStream outToClient = new DataOutputStream(
 					connectionSocket.getOutputStream());
 			
-			int num = 0;
+			int num = 1;
 			while (true) {
 				clientSentence = inFromClient.readLine();
 				
